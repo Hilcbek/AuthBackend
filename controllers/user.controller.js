@@ -30,7 +30,7 @@ export let Login = asyncHandler(async (req,res,next) => {
                 { 
                     if(err) 
                         return(next(ErrorHandle(500, 'error while generating token!')))
-                    res.cookie('token',payload,{ httpOnly: true, secure: true, sameSite: 'strict',}).status(200).json({ data : Username})
+                    res.cookie('token',payload).status(200).json({ data : Username})
             })
 })
 export let Logout = (req,res,next) => {
