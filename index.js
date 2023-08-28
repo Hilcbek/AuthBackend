@@ -5,7 +5,6 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from 'cors'
 import { userRouter } from "./routers/user.router.js";
-import { employeeRouter } from "./routers/employee.router.js";
 let app = express()
 dotenv.config()
 app.use(cors({
@@ -19,7 +18,6 @@ mongoose.connect(process.env.MONGODB).then(() => app.listen(process.env.PORT, ()
 mongoose.connection.on('connected',() => console.log('connected again!'))
 mongoose.connection.on('disconnected',() => console.log('connected stopped!'))
 app.use('/api/auth',userRouter)
-app.use('/api/employee',employeeRouter)
 app.use((err,req,res,next) => {
     let errorMessage = err.message || 'Something went wrong!';
     let errorStatusCode = err.status || 500;

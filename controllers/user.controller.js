@@ -26,11 +26,11 @@ export let Login = asyncHandler(async (req,res,next) => {
         if (!Username) return next(ErrorHandle(500, 'wrong username!'))
         let Password = await bcrypt.compare(password,Username.password);
         if(!Password) return next(ErrorHandle(500, 'wrong username or password!'))
-        jwt.sign({ id : Username._id, username : Username.username }, process.env.JWT, { expiresIn : '1m'}, (err,payload) => 
+        jwt.sign({ id : Username._id, username : Username.username }, process.env.JWT, { expiresIn : '5m'}, (err,payload) => 
                 { 
                     if(err) 
                         return(next(ErrorHandle(500, 'error while generating token!')))
-                    res.cookie('token',payload,{ httpOnly : true, sameSite : 'none',}).status(200).json({ data : Username})
+                    res.cookie('token',payload,{ httpOnly: true, secure: true, sameSite: 'strict',}).status(200).json({ data : Username})
             })
 })
 export let Logout = (req,res,next) => {
@@ -40,3 +40,11 @@ export let Logout = (req,res,next) => {
         next(error)
     }
 }
+export let AllUsers = asyncHandler(async (req,res,next) => {
+    try {
+        let AllUser = await User.find({}).sort({ createdAt : -1 })
+        res.status(200).json({ data : AllUser})
+    } catch (error) {
+        next(error)
+    }
+})
