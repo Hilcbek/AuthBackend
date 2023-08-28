@@ -9,7 +9,7 @@ import { employeeRouter } from "./routers/employee.router.js";
 let app = express()
 dotenv.config()
 app.use(cors({
-    origin : 'http://localhost:5173',
+    origin : ['http://localhost:5173','https://auth-frontend-amber.vercel.app'],
     credentials : true
 }))
 app.use(morgan('common'))
