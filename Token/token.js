@@ -5,7 +5,7 @@ export let VerifyTokenForTheBackend = (req,res,next) => {
         let { token } = req.cookies;
         if(token){
             jwt.verify(token,process.env.JWT,(err,payload) => {
-                if(err) return next(ErrorHandle(500, 'Session has expired!'))
+                if(err) return next(ErrorHandle(500, 'Session has expired! please Login!'))
                 req.user = payload
                 next()
             })
